@@ -1,8 +1,11 @@
 import './App.css';
+import axios from "axios";
+import { useEffect, useState } from 'react';
+import md5 from 'md5';
 
 function App() {
 
-  const apiData = {
+  const [apiData, setApiData] = useState({
     code: 200,
     status: "Ok",
     copyright: "© 2021 MARVEL",
@@ -338,21 +341,45 @@ function App() {
               url: "http://marvel.com/comics/characters/1017100/a-bomb_has?utm_campaign=apiRef&utm_source=a2daf13cc3b736de8f69fb81b9f1c792"
             }
           ]
-        }
+        }        
       ]
     }
-  };
+  })
 
-  const character = apiData.data.results[0];
+  const ts = Date.now()
+  const publicKey = "a2daf13cc3b736de8f69fb81b9f1c792";
+  const privateKey = process.env.PRIVATE_KEY;
+  
+  
+  useEffect(() => {
+    try {
+      axios.get("https://gateway.marvel.com/v1/public/characters?limit=3", 
+        { params: { 
+          apikey: publicKey,
+          ts,
+          hash: md5(ts+privateKey+publicKey)
+        }})
+      .then(res => {
+        console.log("res", res);
+        setApiData(res.data);
+      });
+    } catch (error) {
+        console.log(error);
+    }
+  }, [])  
+
+  console.log("apiData", apiData);
+    
+  const character = apiData.data.results[1];
 
   return (
     <div>
       <h2>Name: </h2>
       <p>{character.name}</p>
       <h2>Description: </h2>
-      <p>character.description</p>
+      <p>{character.description}</p>
       <h2>Piture: </h2>
-      <img src={character.thumbnail.path + "." + character.thumbnail.extension} width="500" height="600" />
+      <img src={character.thumbnail.path + "." + character.thumbnail.extension} width="200" height="200" />
     </div>
   );
 }
