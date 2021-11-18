@@ -1,6 +1,6 @@
 # Media.Monks Challenge
 
-This project was bootstrapped with Create React App and makes use of Chakra UI CSS library for a consistent and modern style aesthetic.
+This project was bootstrapped with Create React App and makes use of Material UI CSS library for a consistent and modern style aesthetic.
 
 ## Available Scripts
 
