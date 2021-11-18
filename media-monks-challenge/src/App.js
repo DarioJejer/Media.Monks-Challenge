@@ -2,22 +2,11 @@ import './App.css';
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import md5 from 'md5';
+import { CharacterCard } from './components/CharacterCard/CharacterCard';
 
 function App() {
 
-  const [apiData, setApiData] = useState({
-    code: 200,
-    status: "Ok",
-    copyright: "© 2021 MARVEL",
-    attributionText: "Data provided by Marvel. © 2021 MARVEL",
-    attributionHTML: "<a href=\"http://marvel.com\">Data provided by Marvel. © 2021 MARVEL</a>",
-    etag: "d410226f5ac4473e4429c7310d446dfbf6175bd0",
-    data: {
-      offset: 0,
-      limit: 2,
-      total: 1559,
-      count: 2,
-      results: [
+  const [characters, setCharacters] = useState([
         {
           id: 1011334,
           name: "3-D Man",
@@ -343,16 +332,14 @@ function App() {
           ]
         }        
       ]
-    }
-  })
-
-  const ts = Date.now()
-  const publicKey = "a2daf13cc3b736de8f69fb81b9f1c792";
-  const privateKey = process.env.PRIVATE_KEY;
-  
+  )
   
   useEffect(() => {
     try {
+      const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+      const ts = Date.now()
+      const publicKey = "a2daf13cc3b736de8f69fb81b9f1c792";
+
       axios.get("https://gateway.marvel.com/v1/public/characters?limit=3", 
         { params: { 
           apikey: publicKey,
@@ -360,26 +347,16 @@ function App() {
           hash: md5(ts+privateKey+publicKey)
         }})
       .then(res => {
-        console.log("res", res);
-        setApiData(res.data);
+        setCharacters(res.data.data.results);
       });
     } catch (error) {
         console.log(error);
     }
   }, [])  
 
-  console.log("apiData", apiData);
-    
-  const character = apiData.data.results[1];
-
   return (
     <div>
-      <h2>Name: </h2>
-      <p>{character.name}</p>
-      <h2>Description: </h2>
-      <p>{character.description}</p>
-      <h2>Piture: </h2>
-      <img src={character.thumbnail.path + "." + character.thumbnail.extension} width="200" height="200" />
+      {characters.map(character => <CharacterCard character={character}/>)}
     </div>
   );
 }
