@@ -1,0 +1,7 @@
+.characters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-auto-rows: auto;
+    justify-items: center;
+    align-items: center;
+}
