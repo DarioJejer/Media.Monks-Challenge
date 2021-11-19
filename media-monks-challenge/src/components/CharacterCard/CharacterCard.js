@@ -4,13 +4,19 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { CharacterDetails } from "./CharacterDetails";
 
 
 export const CharacterCard = ({character}) => {
+
+    const handleClick = () => {
+        window.location.href = `http://localhost:3000/character/${character.id}`;
+    };
+
     return (        
         <div>
             <Card sx={{ width: 300, height: 500, margin: 2}}>
-                <CardActionArea>
+                <CardActionArea onClick={handleClick}>
                     <CardMedia
                     component="img"
                     height="300"
