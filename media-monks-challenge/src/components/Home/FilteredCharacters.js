@@ -1,10 +1,8 @@
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
 import axios from "axios";
 import md5 from "md5";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { CharacterCard } from "../CharacterCard/CharacterCard";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { CharactersAccordion } from "./CharactersAccordion";
 
 
 export const FilteredCharacters = () => {
@@ -65,62 +63,10 @@ export const FilteredCharacters = () => {
 
     return (
         <>
-            <Accordion>
-                <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                >
-                    <Typography>Characters filter by name</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <div className="characters-grid">
-                        {charactersByName.map( (character, i) => <CharacterCard key={i} character={character} />)}
-                    </div>
-                </AccordionDetails>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                >
-                    <Typography>Characters filter by comic</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <div className="characters-grid">
-                        {charactersByComic.map( (character, i) => <CharacterCard key={i} character={character} />)}
-                    </div>
-                </AccordionDetails>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                >
-                    <Typography>Characters filter by series </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <div className="characters-grid">
-                        {charactersBySeries.map( (character, i) => <CharacterCard key={i} character={character} />)}
-                    </div>
-                </AccordionDetails>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                >
-                    <Typography>Characters filter by stories </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <div className="characters-grid">
-                        {charactersByStories.map( (character, i) => <CharacterCard key={i} character={character} />)}
-                    </div>
-                </AccordionDetails>
-            </Accordion>
+            <CharactersAccordion banner="Characters filter by name" characters={charactersByName}/>
+            <CharactersAccordion banner="Characters filter by comic" characters={charactersByComic}/>
+            <CharactersAccordion banner="Characters filter by series" characters={charactersBySeries}/>
+            <CharactersAccordion banner="Characters filter by stories" characters={charactersByStories}/>
         </>
     )
 }
