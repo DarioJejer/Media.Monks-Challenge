@@ -2,12 +2,12 @@ import "./Home.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import md5 from 'md5';
-import { CharacterCard } from "../CharacterCard/CharacterCard";
+import { CharacterCard } from "../Character/CharacterCard";
+import { SearchBar } from "./SearchBar";
 
 export const Home = () => {
-
   
-    const [characters, setCharacters] = useState([
+  const [characters, setCharacters] = useState([
         {
           id: 1011334,
           name: "3-D Man",
@@ -232,7 +232,7 @@ export const Home = () => {
           modified: "2013-09-18T15:54:04-0400",
           thumbnail: {
             path: "http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16",
-            extension: "jpg"
+            extension: "jpg"            
           },
           resourceURI: "http://gateway.marvel.com/v1/public/characters/1017100",
           comics: {
@@ -333,7 +333,7 @@ export const Home = () => {
           ]
         }        
       ]
-  )
+  ) 
   
   useEffect(() => {
     try {
@@ -341,8 +341,8 @@ export const Home = () => {
       const ts = Date.now()
       const publicKey = "a2daf13cc3b736de8f69fb81b9f1c792";
 
-      axios.get("https://gateway.marvel.com/v1/public/characters?limit=3", 
-        { params: { 
+      axios.get("https://gateway.marvel.com/v1/public/characters?limit=10", 
+        { params: {
           apikey: publicKey,
           ts,
           hash: md5(ts+privateKey+publicKey)
@@ -356,7 +356,8 @@ export const Home = () => {
   }, [])  
 
   return (
-    <>
+    <>  
+      <SearchBar/>
       <div className="characters-grid">
         {characters.map( (character, i) => <CharacterCard key={i} character={character} />)}
       </div>
