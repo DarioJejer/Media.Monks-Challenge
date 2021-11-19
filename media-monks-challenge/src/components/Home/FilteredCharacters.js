@@ -11,6 +11,7 @@ export const FilteredCharacters = () => {
     const [charactersByName, setCharactersByName] = useState([])
     const [charactersByComic, setCharactersByComic] = useState([])
     const [charactersBySeries, setCharactersBySeries] = useState([])
+    const [charactersByStories, setCharactersByStories] = useState([])
 
     useEffect(() => {
         try {
@@ -24,11 +25,13 @@ export const FilteredCharacters = () => {
               ts,
               hash: md5(ts+privateKey+publicKey)
             }})
-          .then(res => {
-            setCharactersByName(res.data.data.results);
-            setCharactersByComic(res.data.data.results);
-            setCharactersBySeries(res.data.data.results);
-          });
+          .then(res => res.data.data.results)
+          .then(characters => {
+              setCharactersByName(filterCharactersByName(characters));
+              setCharactersByComic(filterCharactersByComic(characters));
+              setCharactersBySeries(filterCharactersBySeries(characters));
+              setCharactersByStories(filterCharactersByStories(characters));
+          })
         } catch (error) {
             console.log(error);
         }
@@ -39,9 +42,26 @@ export const FilteredCharacters = () => {
         return React.useMemo(() => new URLSearchParams(search), [search]);
     }
 
-    const query = useQuery();
+    const searchValue = useQuery().get("searchValue").toLowerCase();
 
-    console.log("query", query.get("searchValue"));
+    const filterCharactersByName = (characters) => {
+        return characters.filter(character => character.name.toLowerCase().includes(searchValue))
+    }
+    const filterCharactersByComic = (characters) => {
+        return characters.filter(character => {
+            return character.comics.items.filter(comic => comic.name.toLowerCase().includes(searchValue)).length !== 0
+        })
+    }
+    const filterCharactersBySeries = (characters) => {
+        return characters.filter(character => {
+            return character.series.items.filter(serie => serie.name.toLowerCase().includes(searchValue)).length !== 0
+        })
+    }
+    const filterCharactersByStories = (characters) => {
+        return characters.filter(character => {
+            return character.stories.items.filter(story => story.name.toLowerCase().includes(searchValue)).length !== 0
+        })
+    }
 
     return (
         <>
@@ -84,6 +104,20 @@ export const FilteredCharacters = () => {
                 <AccordionDetails>
                     <div className="characters-grid">
                         {charactersBySeries.map( (character, i) => <CharacterCard key={i} character={character} />)}
+                    </div>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion>
+                <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                >
+                    <Typography>Characters filter by stories </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <div className="characters-grid">
+                        {charactersByStories.map( (character, i) => <CharacterCard key={i} character={character} />)}
                     </div>
                 </AccordionDetails>
             </Accordion>
