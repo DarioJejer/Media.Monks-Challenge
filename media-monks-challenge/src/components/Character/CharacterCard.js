@@ -23,11 +23,17 @@ const useStyles = makeStyles({
 export const CharacterCard = ({character}) => {
     const { push } = useHistory();
 
+    var favorites = JSON.parse(localStorage.getItem("favorites"));
+
     const handleDetails = () => {
         push(`/character/${character.id}`)
     };
-    const handleFavorite = () => {
-        push(`/character/${character.id}`)
+    const handleFavorite = (newFavorite) => {
+        favorites = JSON.parse(localStorage.getItem("favorites"));
+        localStorage.setItem(
+            "favorites",
+            JSON.stringify({...favorites, [newFavorite]: true})
+        );
     };
 
     const classes = useStyles()      
@@ -67,7 +73,7 @@ export const CharacterCard = ({character}) => {
                 </CardActionArea>
                 <CardActions>
                     <Box marginTop="-20px">
-                        <IconButton aria-label="add to favorites" onClick={handleFavorite}>
+                        <IconButton aria-label="add to favorites" onClick={() => handleFavorite(character.id)}>
                             <BookmarkBorderIcon />
                         </IconButton>
                     </Box>

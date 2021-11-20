@@ -15,6 +15,10 @@ function App() {
   useEffect(() => {
     dispatch(setUpInitialCharacters());
     dispatch(setUpAllCharacters());
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify({})
+  );
   }, [dispatch])  
   
   return (
