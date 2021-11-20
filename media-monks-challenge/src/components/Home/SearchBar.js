@@ -12,15 +12,11 @@ const Search = styled('div')(({ theme }) => ({
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    '&:focus': {
-      width: '220px',
-      transition: 'width 200ms ease-out',
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
+    margin: '30px auto',
+    width: '300px',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: '300px',
+      margin: "auto 20",
+      width: '400px',
     },
   }));
   
@@ -41,9 +37,9 @@ const Search = styled('div')(({ theme }) => ({
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
-        width: '100%',
+        width: '200px',
         [theme.breakpoints.up('md')]: {
-        width: '100%',
+        width: '300px',
         },
     },
   }));
@@ -68,7 +64,7 @@ export const SearchBar = () => {
                 <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-                placeholder="Search…"
+                placeholder="Name, comic, story or series"
                 value={searchValue}
                 onChange={handleChange}
                 inputProps={{ 'aria-label': 'search' }}

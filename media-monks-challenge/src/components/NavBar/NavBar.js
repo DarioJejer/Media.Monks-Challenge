@@ -18,11 +18,11 @@ export const NavBar = () => {
       <Box sx={{ flexGrow: 1}}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={handleClick}>
+            <IconButton size="large" aria-label="home icon" color="inherit" onClick={handleClick}>
                 <HomeIcon />
             </IconButton>
             <Box sx={{ flexGrow: 1 }} />
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton size="large" aria-label="favorites icon" color="inherit">
                 <BookmarksIcon />
             </IconButton>
           </Toolbar>

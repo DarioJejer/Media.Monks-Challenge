@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     dispatch(setUpInitialCharacters());
     dispatch(setUpAllCharacters());
-  }, [])  
+  }, [dispatch])  
   
   return (
     <div className="App">
