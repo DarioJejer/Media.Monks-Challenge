@@ -1,8 +1,9 @@
-import { SET_UP_INITIAL_CHARACTERS, SET_UP_ALL_CHARACTERS} from "./mainAction.js";
+import { SET_UP_INITIAL_CHARACTERS, SET_UP_ALL_CHARACTERS, SET_DISPLAYED_CHARACTERS} from "./mainAction.js";
 
 
 const initialState = {
     characters: [],
+    displayedCharacters: []
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +18,11 @@ export default (state = initialState, action) => {
           ...state,
           characters: action.payload
         }      
+      case SET_DISPLAYED_CHARACTERS:
+        return{
+          ...state,
+          displayedCharacters: action.payload
+        }
       default:
         return state;
     }

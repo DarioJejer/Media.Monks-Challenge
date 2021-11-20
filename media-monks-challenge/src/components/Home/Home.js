@@ -5,23 +5,27 @@ import { SearchBar } from "./SearchBar";
 import { useSelector } from "react-redux";
 import { Button, Skeleton } from "@mui/material";
 import { Box } from "@mui/system";
+import { setDisplayedCharacters } from '../../redux/mainAction';
+import { useDispatch } from 'react-redux';
 
-export const Home = () => {
-  
-  const [displayedCharacters, setDisplayedCharacters] = useState([])
+export const Home = () => {  
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
+
   const characters = useSelector(state => state.characters)
+  const displayedCharacters = useSelector(state => state.displayedCharacters)
+  
+  const dispatch = useDispatch();
 
   useEffect(() => {
-      setDisplayedCharacters(characters.slice(0,100))
+      dispatch(setDisplayedCharacters(characters.slice(0,100)))
       if(characters.length > 0){
         setLoading(false);
       }
     }, [characters])
 
   const handleClick = () => {
-    setDisplayedCharacters([...displayedCharacters, ...characters.slice(page*100,(page+1)*100)])
+    dispatch(setDisplayedCharacters([...displayedCharacters, ...characters.slice(page*100,(page+1)*100)]))
     setPage(page+1);
   }
 
@@ -50,9 +54,11 @@ export const Home = () => {
           <div className="characters-grid">
             {displayedCharacters.map( (character, i) => <CharacterCard key={i} character={character} />)}
           </div>
-          <Box sx={{ justifyContent: 'center', display: "flex",  p: 2 }}>
-            <Button variant="contained" onClick={handleClick}>Load mode characters</Button>
-          </Box>
+          {characters.length > 100 ? (
+            <Box sx={{ justifyContent: 'center', display: "flex",  p: 2 }}>
+              <Button variant="contained" onClick={handleClick}>Load mode characters</Button>
+            </Box>
+          ) : (<></>)}
         </>
       )}
     </>

@@ -3,6 +3,7 @@ import md5 from "md5";
 
 export const SET_UP_INITIAL_CHARACTERS = "SET_UP_INITIAL_CHARACTERS";
 export const SET_UP_ALL_CHARACTERS = "SET_UP_ALL_CHARACTERS";
+export const SET_DISPLAYED_CHARACTERS = "SET_DISPLAYED_CHARACTERS";
 
 export function setUpInitialCharacters() {
   return function(dispatch) {
@@ -52,4 +53,10 @@ export function setUpAllCharacters() {
     }
     fetchData();
   };
+}
+
+export function setDisplayedCharacters(characters) {
+  return function(dispatch) {
+    dispatch({type: SET_DISPLAYED_CHARACTERS, payload: characters});
+  }
 }
