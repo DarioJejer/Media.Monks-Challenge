@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { CharactersAccordion } from "./CharactersAccordion";
 import { SearchBar } from "../Home/SearchBar";
+import { Divider, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
 
 export const FilteredCharacters = () => {
@@ -50,6 +52,12 @@ export const FilteredCharacters = () => {
     return (
         <>
             <SearchBar/>
+            <Box sx={{width:"88%", margin: "20px auto"}}>
+                <Typography variant="h5">
+                    Results for the search of '{searchValue}' :
+                </Typography>
+            </Box>
+            <Divider sx={{ width:"50%", height:"2px", backgroundColor: "gray", margin: "0 5vw"}}/>
             <CharactersAccordion banner="Characters filter by name" characters={charactersByName}/>
             <CharactersAccordion banner="Characters filter by comic" characters={charactersByComic}/>
             <CharactersAccordion banner="Characters filter by series" characters={charactersBySeries}/>
