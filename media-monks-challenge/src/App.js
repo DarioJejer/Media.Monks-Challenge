@@ -6,7 +6,7 @@ import { CharacterDetails } from './components/Character/CharacterDetails';
 import { FilteredCharacters } from './components/FilteredCharacters/FilteredCharacters';
 import { Home } from './components/Home/Home';
 import { NavBar } from './components/NavBar/NavBar';
-import { setUpAllCharacters, setUpInitialCharacters } from './redux/mainAction';
+import { setUpAllCharacters, setUpInitialCharacters, setFavoritesCharacters } from './redux/mainAction';
 
 
 function App() {
@@ -15,10 +15,16 @@ function App() {
   useEffect(() => {
     dispatch(setUpInitialCharacters());
     dispatch(setUpAllCharacters());
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify({})
-  );
+    var favorites = JSON.parse(localStorage.getItem("favorites"));
+    if (!favorites) {
+      localStorage.setItem(
+        "favorites",
+        JSON.stringify({})
+        );
+    }
+    else{
+      dispatch(setFavoritesCharacters(favorites));
+    }
   }, [dispatch])  
   
   return (

@@ -4,6 +4,7 @@ import md5 from "md5";
 export const SET_UP_INITIAL_CHARACTERS = "SET_UP_INITIAL_CHARACTERS";
 export const SET_UP_ALL_CHARACTERS = "SET_UP_ALL_CHARACTERS";
 export const SET_DISPLAYED_CHARACTERS = "SET_DISPLAYED_CHARACTERS";
+export const SET_FAVORITES_CHARACTERS = "SET_FAVORITES_CHARACTERS";
 
 export function setUpInitialCharacters() {
   return function(dispatch) {
@@ -58,5 +59,11 @@ export function setUpAllCharacters() {
 export function setDisplayedCharacters(characters) {
   return function(dispatch) {
     dispatch({type: SET_DISPLAYED_CHARACTERS, payload: characters});
+  }
+}
+
+export function setFavoritesCharacters(charactersIds) {
+  return function(dispatch) {
+    dispatch({type: SET_FAVORITES_CHARACTERS, payload: charactersIds});
   }
 }

@@ -5,35 +5,49 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions, IconButton, } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { useHistory } from "react-router";
 import { Box } from "@mui/system";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFavoritesCharacters } from '../../redux/mainAction';
 
 const useStyles = makeStyles({
     card: {
         transition: "all .3s linear",
         '&:hover': {
-            transform: "scale(1.05) rotate(1deg)",
+            transform: "scale(1.05) rotate(0.5deg)",
             boxShadow: "0px 0px 15px 12px rgba(0,0,0,0.32)"
         }
    }
 })
 
 export const CharacterCard = ({character}) => {
-    const { push } = useHistory();
 
-    var favorites = JSON.parse(localStorage.getItem("favorites"));
+    const favorites = useSelector(state => state.favorites)
+    const dispatch = useDispatch();
+
+    const { push } = useHistory();
 
     const handleDetails = () => {
         push(`/character/${character.id}`)
     };
-    const handleFavorite = (newFavorite) => {
-        favorites = JSON.parse(localStorage.getItem("favorites"));
+
+    const handleFavoriteAdd = (newFavorite) => {
+        favorites[newFavorite] = true;
         localStorage.setItem(
             "favorites",
-            JSON.stringify({...favorites, [newFavorite]: true})
-        );
+            JSON.stringify(favorites)
+            );
+        dispatch(setFavoritesCharacters(favorites))
+    };
+    const handleFavoriteDelete = (removeFavorite) => {
+        delete favorites[removeFavorite]
+        localStorage.setItem(
+            "favorites",
+            JSON.stringify(favorites)
+            );
+        dispatch(setFavoritesCharacters(favorites))
     };
 
     const classes = useStyles()      
@@ -73,9 +87,15 @@ export const CharacterCard = ({character}) => {
                 </CardActionArea>
                 <CardActions>
                     <Box marginTop="-20px">
-                        <IconButton aria-label="add to favorites" onClick={() => handleFavorite(character.id)}>
-                            <BookmarkBorderIcon />
-                        </IconButton>
+                        {Object.hasOwn(favorites, character.id) ? (
+                            <IconButton aria-label="add to favorites" onClick={() => handleFavoriteDelete(character.id)}>
+                                <BookmarkIcon />
+                            </IconButton>
+                        ) : (
+                            <IconButton aria-label="add to favorites" onClick={() => handleFavoriteAdd(character.id)}>
+                                <BookmarkBorderIcon />
+                            </IconButton>
+                        )}
                     </Box>
                 </CardActions>
             </Card>

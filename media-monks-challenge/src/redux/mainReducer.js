@@ -1,9 +1,10 @@
-import { SET_UP_INITIAL_CHARACTERS, SET_UP_ALL_CHARACTERS, SET_DISPLAYED_CHARACTERS} from "./mainAction.js";
+import { SET_UP_INITIAL_CHARACTERS, SET_UP_ALL_CHARACTERS, SET_DISPLAYED_CHARACTERS, SET_FAVORITES_CHARACTERS} from "./mainAction.js";
 
 
 const initialState = {
     characters: [],
-    displayedCharacters: []
+    displayedCharacters: [],
+    favorites: {}
 };
 
 export default (state = initialState, action) => {
@@ -22,6 +23,11 @@ export default (state = initialState, action) => {
         return{
           ...state,
           displayedCharacters: action.payload
+        }
+      case SET_FAVORITES_CHARACTERS:
+        return{
+          ...state,
+          favorites: action.payload
         }
       default:
         return state;
