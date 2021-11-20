@@ -10,6 +10,13 @@ import { Box } from "@mui/system";
 export const FilteredCharacters = () => {
 
     const characters = useSelector(state => state.characters)
+    
+    const useQuery = () => {
+        const { search } = useLocation();  
+        return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
+
+    const searchValue = useQuery().get("searchValue").toLowerCase();
 
     const [charactersByName, setCharactersByName] = useState([])
     const [charactersByComic, setCharactersByComic] = useState([])
@@ -21,14 +28,8 @@ export const FilteredCharacters = () => {
         setCharactersByComic(filterCharactersByComic(characters));
         setCharactersBySeries(filterCharactersBySeries(characters));
         setCharactersByStories(filterCharactersByStories(characters));
-    }, [characters])  
+    }, [characters, searchValue])  
 
-    const useQuery = () => {
-        const { search } = useLocation();  
-        return React.useMemo(() => new URLSearchParams(search), [search]);
-    }
-
-    const searchValue = useQuery().get("searchValue").toLowerCase();
 
     const filterCharactersByName = (characters) => {
         return characters.filter(character => character.name.toLowerCase().includes(searchValue))
