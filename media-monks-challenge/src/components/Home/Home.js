@@ -336,23 +336,49 @@ export const Home = () => {
   ) 
   
   useEffect(() => {
-    try {
-      const privateKey = process.env.REACT_APP_PRIVATE_KEY;
-      const ts = Date.now()
-      const publicKey = "a2daf13cc3b736de8f69fb81b9f1c792";
+    async function fetchData(){
+      try {
+        const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+        const ts = Date.now()
+        const publicKey = "a2daf13cc3b736de8f69fb81b9f1c792";
+        var count = 0
+        var totalCharacters = 1600
+        // initial get to quickly show character to the user
+        await axios.get("https://gateway.marvel.com/v1/public/characters", 
+            { params: {
+              apikey: publicKey,
+              ts,
+              hash: md5(ts+privateKey+publicKey),
+              limit: 100,
+            }})
+          .then(res => {
+            totalCharacters = res.data.data.total
+            console.log(totalCharacters);
+            setCharacters(res.data.data.results);
+          })
+        var loadedCharacter = []
+        console.log("total", totalCharacters);
+        // background loading of the rest of characters
+        while (count*100 < totalCharacters) {
+          await axios.get("https://gateway.marvel.com/v1/public/characters", 
+            { params: {
+              apikey: publicKey,
+              ts,
+              hash: md5(ts+privateKey+publicKey),
+              limit: 100,
+              offset: count*100
+            }})
+          .then(res => {
+            loadedCharacter.push(...res.data.data.results);
+          });        
+        }
+        setCharacters(loadedCharacter)
 
-      axios.get("https://gateway.marvel.com/v1/public/characters?limit=10", 
-        { params: {
-          apikey: publicKey,
-          ts,
-          hash: md5(ts+privateKey+publicKey)
-        }})
-      .then(res => {
-        setCharacters(res.data.data.results);
-      });
-    } catch (error) {
-        console.log(error);
+      } catch (error) {
+          console.log(error);
+      }
     }
+    fetchData();
   }, [])  
 
   return (
