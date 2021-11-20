@@ -3,10 +3,22 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions, IconButton } from '@mui/material';
+import { CardActionArea, CardActions, IconButton, } from '@mui/material';
+import { makeStyles } from '@material-ui/core/styles';
+
 import { useHistory } from "react-router";
 import { Box } from "@mui/system";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+
+const useStyles = makeStyles({
+    card: {
+        transition: "all .3s linear",
+        '&:hover': {
+            transform: "scale(1.05) rotate(1deg)",
+            boxShadow: "0px 0px 15px 12px rgba(0,0,0,0.32)"
+        }
+   }
+})
 
 export const CharacterCard = ({character}) => {
     const { push } = useHistory();
@@ -18,9 +30,11 @@ export const CharacterCard = ({character}) => {
         push(`/character/${character.id}`)
     };
 
+    const classes = useStyles()      
+
     return (        
         <div>
-            <Card sx={{ width: 300, height: 530, margin: 2, backgroundColor: "white", borderRadius: "15px", boxShadow: "0px 0px 10px 8px rgba(0,0,0,0.32)"}}>
+            <Card className={classes.card} sx={{ width: 300, height: 530, margin: 2, backgroundColor: "white", borderRadius: "15px", boxShadow: "0px 0px 10px 8px rgba(0,0,0,0.32)"}}>
                 <CardActionArea onClick={handleDetails}>
                     <CardMedia
                     component="img"
