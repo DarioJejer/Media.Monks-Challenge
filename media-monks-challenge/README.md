@@ -4,7 +4,7 @@ This project was bootstrapped with Create React App and makes use of Material UI
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the media-monks-challenge directory, you can run:
 
 ### `npm start`
 
