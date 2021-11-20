@@ -1,34 +1,16 @@
 import { CardMedia, Divider, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import axios from 'axios';
-import md5 from 'md5';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 
 
 export const CharacterDetails = ({id}) => {
     const [character, setCharacter] = React.useState();
+    const characters = useSelector(state => state.characters)
 
     React.useEffect(() => {
-        try {
-          const privateKey = process.env.REACT_APP_PRIVATE_KEY;
-          const ts = Date.now()
-          const publicKey = "a2daf13cc3b736de8f69fb81b9f1c792";
-    
-          axios.get(`https://gateway.marvel.com/v1/public/characters/${id}`, 
-            { params: { 
-              apikey: publicKey,
-              ts,
-              hash: md5(ts+privateKey+publicKey)
-            }})
-          .then(res => {
-            console.log(res.data);
-            console.log(res.data.data);
-            setCharacter(res.data.data.results[0]);
-          });
-        } catch (error) {
-            console.log(error);
-        }
-      }, [id])    
+      setCharacter(characters.find(c => c.id ===  parseInt(id)))
+      }, [])    
 
     return (        
         <>

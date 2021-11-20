@@ -4,11 +4,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { useHistory } from "react-router";
 
 export const CharacterCard = ({character}) => {
+    const { push } = useHistory();
 
     const handleClick = () => {
-        window.location.href = `http://localhost:3000/character/${character.id}`;
+        push(`/character/${character.id}`)
     };
 
     return (        
