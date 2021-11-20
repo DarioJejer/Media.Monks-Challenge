@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { useHistory } from "react-router";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -50,10 +51,11 @@ const Search = styled('div')(({ theme }) => ({
 export const SearchBar = () => {
 
     const [searchValue, setSearchValue] = useState("")
+    const { push } = useHistory();
       
     const onSubmit = (e)=>{
         e.preventDefault();
-        window.location.href = `http://localhost:3000/search?searchValue=${searchValue}`;
+        push(`/search?searchValue=${searchValue}`)
     }
     const handleChange = (e)=>{
         setSearchValue(e.target.value)

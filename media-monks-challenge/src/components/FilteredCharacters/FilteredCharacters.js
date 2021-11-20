@@ -1,39 +1,25 @@
-import axios from "axios";
-import md5 from "md5";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { CharactersAccordion } from "./CharactersAccordion";
+import { SearchBar } from "../Home/SearchBar";
 
 
 export const FilteredCharacters = () => {
+
+    const characters = useSelector(state => state.characters)
+
     const [charactersByName, setCharactersByName] = useState([])
     const [charactersByComic, setCharactersByComic] = useState([])
     const [charactersBySeries, setCharactersBySeries] = useState([])
     const [charactersByStories, setCharactersByStories] = useState([])
 
-    useEffect(() => {
-        try {
-          const privateKey = process.env.REACT_APP_PRIVATE_KEY;
-          const ts = Date.now()
-          const publicKey = "a2daf13cc3b736de8f69fb81b9f1c792";
-    
-          axios.get("https://gateway.marvel.com/v1/public/characters?limit=3", 
-            { params: { 
-              apikey: publicKey,
-              ts,
-              hash: md5(ts+privateKey+publicKey)
-            }})
-          .then(res => res.data.data.results)
-          .then(characters => {
-              setCharactersByName(filterCharactersByName(characters));
-              setCharactersByComic(filterCharactersByComic(characters));
-              setCharactersBySeries(filterCharactersBySeries(characters));
-              setCharactersByStories(filterCharactersByStories(characters));
-          })
-        } catch (error) {
-            console.log(error);
-        }
-      }, [])  
+    useEffect(() => {        
+        setCharactersByName(filterCharactersByName(characters));
+        setCharactersByComic(filterCharactersByComic(characters));
+        setCharactersBySeries(filterCharactersBySeries(characters));
+        setCharactersByStories(filterCharactersByStories(characters));
+    }, [])  
 
     const useQuery = () => {
         const { search } = useLocation();  
@@ -63,6 +49,7 @@ export const FilteredCharacters = () => {
 
     return (
         <>
+            <SearchBar/>
             <CharactersAccordion banner="Characters filter by name" characters={charactersByName}/>
             <CharactersAccordion banner="Characters filter by comic" characters={charactersByComic}/>
             <CharactersAccordion banner="Characters filter by series" characters={charactersBySeries}/>

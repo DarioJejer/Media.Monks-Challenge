@@ -5,11 +5,13 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import HomeIcon from '@mui/icons-material/Home';
+import { useHistory } from 'react-router';
 
 export const NavBar = () => {
+    const { push } = useHistory();
 
     const handleClick = () => {
-      window.location.href = `http://localhost:3000`;
+        push("/")
     }
   
     return (
