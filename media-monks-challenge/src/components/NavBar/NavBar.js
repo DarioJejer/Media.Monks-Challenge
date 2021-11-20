@@ -15,8 +15,8 @@ export const NavBar = () => {
     }
   
     return (
-      <Box sx={{ flexGrow: 1}}>
-        <AppBar position="static">
+      <Box sx={{ width: "80%", margin: "0px auto"}}>
+        <AppBar position="sticky" sx={{ backgroundColor: "rgba(0, 0, 0, 0.5)", borderRadius: "15px"} }>
           <Toolbar>
             <IconButton size="large" aria-label="home icon" color="inherit" onClick={handleClick}>
                 <HomeIcon />

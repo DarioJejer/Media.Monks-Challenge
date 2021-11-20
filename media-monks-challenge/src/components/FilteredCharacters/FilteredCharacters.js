@@ -19,7 +19,7 @@ export const FilteredCharacters = () => {
         setCharactersByComic(filterCharactersByComic(characters));
         setCharactersBySeries(filterCharactersBySeries(characters));
         setCharactersByStories(filterCharactersByStories(characters));
-    }, [])  
+    }, [characters])  
 
     const useQuery = () => {
         const { search } = useLocation();  

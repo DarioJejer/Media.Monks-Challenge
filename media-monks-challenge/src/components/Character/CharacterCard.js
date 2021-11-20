@@ -5,7 +5,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions, IconButton } from '@mui/material';
 import { useHistory } from "react-router";
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Box } from "@mui/system";
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
@@ -21,7 +20,7 @@ export const CharacterCard = ({character}) => {
 
     return (        
         <div>
-            <Card sx={{ width: 300, height: 530, margin: 2}}>
+            <Card sx={{ width: 300, height: 530, margin: 2, backgroundColor: "white", borderRadius: "15px", boxShadow: "0px 0px 10px 8px rgba(0,0,0,0.32)"}}>
                 <CardActionArea onClick={handleDetails}>
                     <CardMedia
                     component="img"

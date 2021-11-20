@@ -1,4 +1,6 @@
 .App {
   min-height: 100vh;
-  background-color: #282c34 ;
+  background: linear-gradient(0deg, rgba(36,54,89,1) 0%, rgba(31,38,51,1) 56%, rgba(36,54,89,1) 100%) ;
+  padding: 20px 0px;
+  color: white
 }
